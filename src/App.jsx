@@ -71,7 +71,7 @@ function App() {
 
       console.log("raw tasks", taskArray)
       const formattedTasks = taskArray.map(task => ({
-        id: task.0.toNumber(), 
+        id: task.id.toNumber(), 
         title: task.title, 
         description: task.description, 
         isCompleted: task.isCompleted,
