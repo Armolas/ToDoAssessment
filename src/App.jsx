@@ -112,6 +112,14 @@ function App() {
           </button>
         </div>
         <div style={{ marginTop: '24px', spaceY: '16px' }}>
+        <button
+            onClick={getTasks}
+            style={{ width: '100%', backgroundColor: '#4299e1', color: '#fff', padding: '8px', borderRadius: '8px', cursor: 'pointer', hover: { backgroundColor: '#3182ce' }, transition: 'background-color 0.3s' }}
+          >
+            Get Tasks
+          </button>
+        </div>
+        <div style={{ marginTop: '24px', spaceY: '16px' }}>
           {tasks.length === 0 ? (
             <p style={{ textAlign: 'center', color: '#a0aec0' }}>No tasks yet</p>
           ) : (
@@ -134,6 +142,7 @@ function App() {
             ))
           )}
         </div>
+        
       </div>
       <ToastContainer />
     </div>
