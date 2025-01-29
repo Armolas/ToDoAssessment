@@ -5,6 +5,7 @@ import { ethers } from 'ethers'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
+
 function App() {
   const [newTaskTitle, setNewTaskTitle] = useState('')
   const [newTaskText, setNewTaskText] = useState('')
@@ -71,10 +72,10 @@ function App() {
 
       console.log("raw tasks", taskArray)
       const formattedTasks = taskArray.map(task => ({
-        id: task.id.toNumber(), 
-        title: task.title, 
-        description: task.description, 
-        isCompleted: task.isCompleted,
+        id: task[0],
+        title: task[1],
+        description: task[2],
+        isCompleted: task[3]
       }));
       console.log("formatted tasks", formattedTasks)
       toast.success('Tasks fetched successfully')
@@ -86,37 +87,57 @@ function App() {
   }
 
   return (
-    <>
-      <div className="App">
-        <h1>Task List</h1>
-        <div className="form">
+    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#f7fafc', padding: '16px' }}>
+      <div style={{ width: '100%', maxWidth: '400px', backgroundColor: '#fff', boxShadow: '0 10px 15px rgba(0, 0, 0, 0.1)', borderRadius: '12px', padding: '24px' }}>
+        <h1 style={{ fontSize: '24px', fontWeight: 'bold', textAlign: 'center', color: '#2d3748' }}>Task List</h1>
+        <div style={{ marginTop: '16px', spaceY: '8px' }}>
           <input
             type="text"
             placeholder="Title"
+            style={{ width: '100%', padding: '8px', border: '1px solid #e2e8f0', borderRadius: '8px', outline: 'none', focus: { outline: '2px solid #4299e1' } }}
             value={newTaskTitle}
             onChange={(e) => setNewTaskTitle(e.target.value)}
           />
           <textarea
-            placeholder="Text"
+            placeholder="Task description"
+            style={{ width: '100%', padding: '8px', border: '1px solid #e2e8f0', borderRadius: '8px', outline: 'none', focus: { outline: '2px solid #4299e1' } }}
             value={newTaskText}
             onChange={(e) => setNewTaskText(e.target.value)}
           ></textarea>
-          <button onClick={addTask}>Add Task</button>
+          <button
+            onClick={addTask}
+            style={{ width: '100%', backgroundColor: '#4299e1', color: '#fff', padding: '8px', borderRadius: '8px', cursor: 'pointer', hover: { backgroundColor: '#3182ce' }, transition: 'background-color 0.3s' }}
+          >
+            Add Task
+          </button>
         </div>
-        <div className="tasks">
-          {tasks.map((task, index) => (
-            <div className="task" key={index}>
-              <h2>{task.title}</h2>
-              <p>{task.description}</p>
-              <button onClick={() => deleteTask(task.id)}>Delete</button>
-            </div>
-          ))}
+        <div style={{ marginTop: '24px', spaceY: '16px' }}>
+          {tasks.length === 0 ? (
+            <p style={{ textAlign: 'center', color: '#a0aec0' }}>No tasks yet</p>
+          ) : (
+            tasks.map((task) => (
+              <div
+                key={task.id}
+                style={{ padding: '16px', backgroundColor: '#f7fafc', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+              >
+                <div>
+                  <h2 style={{ fontSize: '18px', fontWeight: '600', color: '#718096' }}>{task.title}</h2>
+                  <p style={{ color: '#718096' }}>{task.description}</p>
+                </div>
+                <button
+                  onClick={() => deleteTask(task.id)}
+                  style={{ color: '#e53e3e', cursor: 'pointer', hover: { color: '#c53030' }, transition: 'color 0.3s' }}
+                >
+                  Delete
+                </button>
+              </div>
+            ))
+          )}
         </div>
-        <button onClick={getTasks}>Get Tasks</button>
       </div>
       <ToastContainer />
-    </>
-  )
+    </div>
+  );
 }
 
 export default App
